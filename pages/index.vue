@@ -3,7 +3,8 @@
     <div>
       <Logo />
       <h1 class="title">
-        nuxt_test
+        nuxtはじめました！！
+
       </h1>
       <div class="links">
         <a
@@ -28,6 +29,10 @@
 </template>
 
 <script>
+
+
+
+
 export default {}
 </script>
 
