@@ -4,5 +4,11 @@
   },
   "LazyLogo": {
     "description": "Auto imported from components/Logo.vue"
+  },
+  "MyButton": {
+    "description": "Auto imported from components/MyButton.vue"
+  },
+  "LazyMyButton": {
+    "description": "Auto imported from components/MyButton.vue"
   }
 }
