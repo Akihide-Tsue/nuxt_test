@@ -1,60 +1,85 @@
 <template>
-  <div class="container">
-    <ul>
-      <li>
-        <label>身長</label>
-        <input type="nubmer" v-model="tall" />
-        <span>cm</span>
-      </li>
-      <li>
-        <label>体重</label>
-        <input type="nubmer" v-model="weight" />
-        <span>kg</span>
-      </li>
-      <li>BMI(Body Mass Index) = {{format(bmi)}}</li>
-      <li>適正体重 = {{format(standard_weight)}}kg</li>
-      <li>適正体重との差 = {{format(weight - standard_weight)}}kg</li>
-    </ul>
+  <div class="index">
+    <nav>
+      <header @click="year++">▲</header>
+      <section>{{year}}年</section>
+      <footer @click="year--">▼</footer>
+    </nav>
+    <nav>
+      <header @click="increment_month">▲</header>
+      <section>{{month}}月</section>
+      <footer @click="decrement_month">▼</footer>
+    </nav>
+    <Calendar :year="year" :month="month" v-model="schedules" />
   </div>
 </template>
 
 <script>
+import Calendar from "~/components/Calendar.vue";
 export default {
+  components: {
+    Calendar
+  },
   data() {
     return {
-      tall: 185,
-      weight: 80
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1,
+      schedules: { "2020-07-11": "勉強会" }
     };
   },
-  computed: {
-    bmi() {
-      return (this.weight / (this.tall * this.tall)) * 10000;
+  methods: {
+    increment_month() {
+      if (this.month < 12) {
+        this.month++;
+      } else {
+        this.month = 1;
+        this.year++;
+      }
     },
-    standard_weight() {
-      return (this.tall * this.tall * 22) / 10000;
+    decrement_month() {
+      if (this.month > 1) {
+        this.month--;
+      } else {
+        this.month = 12;
+        this.year--;
+      }
     }
   },
-  methods: {
-    format(value) {
-      const x100 = value * 100;
-      return Math.round(x100) / 100;
+  watch: {
+    schedules: {
+      deep: true,
+      handler(value) {
+        localStorage.schedules = JSON.stringify(value);
+      }
+    }
+  },
+  mounted() {
+    if (localStorage.schedules) {
+      try {
+        this.schedules = JSON.parse(localStorage.schedules);
+      } catch(e) {
+      }
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
+.index {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  > ul {
-    list-style-type: none;
-    > li {
-      margin: 1em;
+  padding: 2em;
+  > nav {
+    display: flex;
+    flex-direction: column;
+    > header {
+      font-size: 150%;
+      cursor: pointer;
+      text-align: center;
+    }
+    > footer {
+      font-size: 150%;
+      cursor: pointer;
+      text-align: center;
     }
   }
 }

@@ -1,4 +1,10 @@
 {
+  "Calendar": {
+    "description": "Auto imported from components/Calendar.vue"
+  },
+  "LazyCalendar": {
+    "description": "Auto imported from components/Calendar.vue"
+  },
   "Logo": {
     "description": "Auto imported from components/Logo.vue"
   },
